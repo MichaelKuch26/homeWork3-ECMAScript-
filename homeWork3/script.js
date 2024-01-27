@@ -138,28 +138,37 @@ class Product {
     this.#name = name;
     this.#price = price;
     this.#quantity = quantity;
+    if (Product.#maxQuantity <= this.#quantity) {
+      throw new Error("Quantity is too high");
+    }
   }
-  changePrice(value) {
+  getName() {
+    return this.#name;
+  }
+  getPrice() {
+    return this.#price;
+  }
+  getQuantity() {
+    return this.#quantity;
+  }
+
+  setPrice(value) {
     return this.#price = value;
   }
-  changeQuantity(value) {
+  setQuantity(value) {
     return this.#quantity = value;
   }
   getCost() {
-    if (Product.#maxQuantity <= this.#quantity) {
-      throw new Error("Quantity is too high");
-    } else {
-      return this.#price * this.#quantity;
-    }
+    return this.#price * this.#quantity;
   }
 }
 
 const product1 = new Product('Тетрадь', 50, 200);
 console.log(product1);
 
-console.log(product1.name); // "Тетрадь"
-console.log(product1.price); // 50
-console.log(product1.quantity); // 200
+console.log(product1.getName()); // "Тетрадь"
+console.log(product1.getPrice()); // 50
+console.log(product1.getQuantity()); // 200
 console.log(product1.getCost()); // 10000
 
 const product2 = new Product('Ручка', 10, 5000); // выбросится ошибка "Quantity is too high"
@@ -175,6 +184,9 @@ class User {
     this.#name = name;
     this.#age = age;
     this.#mail = mail;
+    if (User.#maxAge <= age) {
+      throw new Error("Error: Age is too high");
+    }
   }
   
   getName() {
@@ -186,8 +198,6 @@ class User {
   getMail() {
     return this.#mail;
   }
-
-
   setName(value) {
     return this.#name = value;
   }
@@ -197,24 +207,16 @@ class User {
   setMail(value) {
     return this.#mail = value;
   }
-  
-  getMaxAge(age) {
-    if (User.#maxAge <= age) {
-      throw new Error("Error: Age is too high");
-    } else {
-      return User.#maxAge;
+  getMaxAge() {
+    return User.#maxAge;
     }
-  }
 }
 
-
 const user1 = new User('John', 30);
-
-console.log(user1.getMaxAge());
 
 console.log(user1.getName()); // "John"
 user1.setName('Mike');
 console.log(user1.getName()); // "Mike"
-// console.log(User.getMaxAge()); // 120
-console.log(User.getMaxAge());
+console.log(user1.getMaxAge()); // 120
+
 const user2 = new User('Jane', 150); // Error: Age is too high
